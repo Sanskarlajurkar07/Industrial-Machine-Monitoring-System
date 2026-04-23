@@ -1,0 +1,67 @@
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Kiro AI Assistant
+.kiro/
+
+# Java / Maven
+backend/Industrialmonitor/target/
+backend/Industrialmonitor/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Python
+simulator/__pycache__/
+simulator/*.pyc
+simulator/.pytest_cache/
+simulator/venv/
+simulator/.env
+
+# Qt / C++
+dashboard/build/
+dashboard/*.user
+dashboard/*.autosave
+dashboard/CMakeLists.txt.user
+dashboard/moc_*.cpp
+dashboard/qrc_*.cpp
+dashboard/ui_*.h
+
+# Environment and Secrets
+.env
+*.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Archives (optional - remove if you want to keep backend.zip)
+*.zip
+*.tar.gz
+*.rar
+
+# OS specific
+Thumbs.db
+Desktop.ini
