@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import "../components"
 
@@ -45,13 +46,13 @@ Rectangle {
                     GridView {
                         id: machineGrid
                         width: parent.width
-                        height: machines
+                        height: (machines && machines.count > 0)
                             ? Math.ceil(machines.count / 4)
                               * 118 + 8
                             : 118
                         cellWidth: width / 4
                         cellHeight: 118
-                        model: machines
+                        model: machines ? machines : null
                         interactive: false
 
                         delegate: Item {

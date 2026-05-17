@@ -1,0 +1,70 @@
+================================================================================
+QUICK FIX - Dashboard Won't Start
+================================================================================
+
+PROBLEM: Qt 6.11.0 doesn't exist! Your build is configured for a fake version.
+
+SOLUTION (Choose ONE):
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ METHOD 1: Fix in Qt Creator (EASIEST)                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. Open Qt Creator
+2. Tools → Options → Kits
+3. Change "Qt version" from "6.11.0" to your REAL version (6.5, 6.6, 6.7, or 6.8)
+4. Click OK
+5. Right-click project → Run CMake
+6. Build → Clean All
+7. Build → Rebuild All
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ METHOD 2: Use Rebuild Script (AUTOMATIC)                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. Open Command Prompt
+2. cd E:\industrial-monitor\dashboard
+3. rebuild.bat
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ METHOD 3: Manual Build (ADVANCED)                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. Find your Qt version:
+   dir C:\Qt
+   
+2. Replace 6.8.0 below with YOUR version:
+   cd E:\industrial-monitor\dashboard
+   rmdir /s /q build
+   mkdir build
+   cd build
+   cmake .. -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH=C:\Qt\6.8.0\mingw_64
+   C:\Qt\Tools\mingw1310_64\bin\mingw32-make.exe
+
+================================================================================
+
+AFTER FIX:
+
+✓ Executable will exist at:
+  E:\industrial-monitor\dashboard\build\...\IndustrialMonitorQML.exe
+
+✓ Run it:
+  cd build\Desktop_Qt_6_X_X_MinGW_64_bit-Debug
+  IndustrialMonitorQML.exe
+
+✓ You should see:
+  Starting application...
+  Types registered...
+  BackendBridge created...
+  Loading QML...
+  QML loaded successfully!
+
+================================================================================
+
+STILL NOT WORKING?
+
+→ Read FIX_SUMMARY.md for detailed instructions
+→ Read CRITICAL_FIX.md for Qt version troubleshooting
+→ Read BUILD_FIX.md for build error solutions
+
+================================================================================

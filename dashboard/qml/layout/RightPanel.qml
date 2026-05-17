@@ -56,7 +56,7 @@ Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: contentHeight
             Layout.maximumHeight: 280
-            model: alerts
+            model: alerts ? alerts : null
             spacing: 6
             clip: true
             interactive: alerts ? alerts.count > 3 : false

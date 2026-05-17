@@ -1,67 +1,78 @@
 import QtQuick
-import QtCharts
 
-ChartView {
+Rectangle {
     id: chart
-    antialiasing: true
-    backgroundColor: "transparent"
-    plotAreaColor: "transparent"
-    legend.visible: false
-    margins.top: 0
-    margins.bottom: 0
-    margins.left: 0
-    margins.right: 0
-
+    color: "#0D1520"
+    
     property color lineColor: "#00FF9C"
     property real minY: 0
     property real maxY: 100
     property string chartTitle: ""
-
-    ValueAxis {
-        id: axisX
-        min: 0; max: 60
-        labelsVisible: false
-        gridVisible: false
-        lineVisible: false
-        tickCount: 0
-    }
-
-    ValueAxis {
-        id: axisY
-        min: minY; max: maxY
-        labelsColor: "#4A5A6A"
-        labelFormat: "%.0f"
-        gridLineColor: "#1E2A38"
-        lineVisible: false
-        tickCount: 4
-        labelsFont.pixelSize: 8
-    }
-
-    LineSeries {
-        id: lineSeries
-        axisX: axisX
-        axisY: axisY
-        color: lineColor
-        width: 1.5
-    }
-
-    property int xCounter: 0
-
-    function appendPoint(y) {
-        if (lineSeries.count >= 60) {
-            lineSeries.removePoints(0, 1)
+    
+    // Simple placeholder chart without QtCharts dependency
+    Canvas {
+        id: canvas
+        anchors.fill: parent
+        anchors.margins: 20
+        
+        property var dataPoints: []
+        
+        onPaint: {
+            var ctx = getContext("2d");
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw grid
+            ctx.strokeStyle = "#1E2A38";
+            ctx.lineWidth = 1;
+            for (var i = 0; i < 4; i++) {
+                var y = (height / 3) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            // Draw line
+            if (dataPoints.length > 1) {
+                ctx.strokeStyle = lineColor;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                var xStep = width / (dataPoints.length - 1);
+                for (var j = 0; j < dataPoints.length; j++) {
+                    var x = j * xStep;
+                    var normalizedY = (dataPoints[j] - minY) / (maxY - minY);
+                    var y = height - (normalizedY * height);
+                    
+                    if (j === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+            }
         }
-        lineSeries.append(xCounter, y)
-        xCounter++
-        axisX.min = Math.max(0, xCounter - 60)
-        axisX.max = xCounter
     }
-
+    
+    property int xCounter: 0
+    
+    function appendPoint(y) {
+        if (canvas.dataPoints.length >= 60) {
+            canvas.dataPoints.shift();
+        }
+        canvas.dataPoints.push(y);
+        canvas.requestPaint();
+        xCounter++;
+    }
+    
     Component.onCompleted: {
+        canvas.dataPoints = [];
         for (var i = 0; i < 30; i++) {
             var v = minY + (maxY - minY) * 0.6
-                + (Math.random() - 0.5) * (maxY - minY) * 0.1
-            appendPoint(v)
+                + (Math.random() - 0.5) * (maxY - minY) * 0.1;
+            canvas.dataPoints.push(v);
         }
+        canvas.requestPaint();
     }
 }

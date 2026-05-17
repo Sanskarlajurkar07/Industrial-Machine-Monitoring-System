@@ -1,0 +1,25 @@
+# GitHub Language Detection Configuration
+# This file controls how GitHub detects and displays repository languages
+
+# Mark Qt/QML files as documentation to reduce their weight in language stats
+dashboard/**/*.cpp linguist-documentation
+dashboard/**/*.h linguist-documentation
+dashboard/**/*.qml linguist-documentation
+dashboard/CMakeLists.txt linguist-documentation
+
+# Mark Python simulator as documentation
+simulator/**/*.py linguist-documentation
+simulator/requirements.txt linguist-documentation
+
+# Ensure Java backend is properly detected and weighted
+backend/**/*.java linguist-detectable=true
+backend/**/pom.xml linguist-detectable=true
+
+# Mark configuration files appropriately
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.json linguist-language=JSON
+*.xml linguist-language=XML
+
+# Documentation files
+*.md linguist-documentation
